@@ -1,5 +1,5 @@
-from Veiculos import Veiculo
-class VeiculosMes:
+from vehiculos import vehiculo
+class vehiculosMes:
     def __init__(self, Id, Slot):
         self.Id = Id
         self.Categoria = Categoria

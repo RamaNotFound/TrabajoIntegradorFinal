@@ -1,5 +1,5 @@
-from Veiculos import Veiculo
-class VeiculosHora:
+from vehiculos import vehiculo
+class vehiculosHora:
     def __init__(self, horas, Slot):
         self.horas = horas
         self.Categoria = Categoria
