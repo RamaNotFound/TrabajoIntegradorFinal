@@ -1,6 +1,6 @@
 from Veiculos import Veiculo
 class VeiculosHora:
-    def __init__(self, horas, Categoria):
+    def __init__(self, horas, Slot):
         self.horas = horas
         self.Categoria = Categoria
     def mostrar_datos(self):

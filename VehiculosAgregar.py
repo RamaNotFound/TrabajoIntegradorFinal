@@ -3,7 +3,7 @@ from VeiculosHora import VeiculosHora
 class AgregarVeiculo:
     def __init__(self):
         self.listadeveiculos = []
-    def agregar_Veiculo(self, Id = None, horas = None):
+    def agregar_Veiculo(self, Slot, Id = None, horas = None):
         if Id:
             e = VeiculosMes(Id)
         elif horas:
@@ -17,3 +17,7 @@ class AgregarVeiculo:
             if un_Veiculo.id == id_para_buscar:
                 return un_Veiculo
         return None
+    def eliminar_veiculo(self, Slot):
+        for veiculo in self.listadeveiculos:
+            if nota == id_nota:
+                self.notas.remove(nota)
