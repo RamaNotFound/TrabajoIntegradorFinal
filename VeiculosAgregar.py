@@ -12,3 +12,8 @@ class AgregarVeiculo:
             return None
 
         self.listadeveiculos.append(e)
+    def buscar_por_id(self, id_para_buscar):
+        for un_Veiculo in self.listadeveiculos:
+            if un_Veiculo.id == id_para_buscar:
+                return un_Veiculo
+        return None
