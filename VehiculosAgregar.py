@@ -1,13 +1,10 @@
-from vehiculosMes import vehiculosMes
-from vehiculosHora import vehiculosHora
+from vehiculos import veiculo 
 class Agregarvehiculo:
     def __init__(self):
         self.listadevehiculos = []
-    def agregar_vehiculo(self, Slot, Id = None, horas = None):
-        if Id:
-            e = vehiculosMes(Id)
-        elif horas:
-            e = vehiculosHora(horas)
+    def agregar_vehiculo(self, patente, entrada, salida, slot):
+        if patente:
+            e = vehiculo(patente)
         else:
             return None
 
