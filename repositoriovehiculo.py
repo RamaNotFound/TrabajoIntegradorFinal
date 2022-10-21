@@ -7,7 +7,7 @@ class RepositorioPatentes:
         patentes = []
         with open(self.archivo, 'r') as fp:
             for patente_como_texto in fp:
-                n = self.texto_a_patente(patente_como_texto)
+                n = self.patente_a_texto(patente_como_texto)
                 patentes.append(n)
         return patente
     

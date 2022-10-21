@@ -1,9 +1,9 @@
 class vehiculo:
-    def __init__(self, patente, entrada, salida, slot = None):
+    def __init__(self, patente = None, entrada = None, slot = None):
         self.patente = patente
         self.slot = slot
         self.entrada = entrada
-        self.salida = salida
+      
     
     def existeVeiculo(self, busqueda):
         return ((busqueda in self.patente) or (busqueda in self.slot))
