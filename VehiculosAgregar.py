@@ -17,7 +17,9 @@ class Agregarvehiculo:
             if un_vehiculo.id == id_para_buscar:
                 return un_vehiculo
         return None
-    def eliminar_vehiculo(self, Slot):
-        for vehiculo in self.listadevehiculos:
-            if vehiculo == Slot:
-                self.listadevehiculos.remove(vehiculo)
+    def eliminar_vehiculo(self, patente):
+        vehiculo = self.buscar_por_id(patente)
+        if vehiculo.patente == patente:
+            self.listadevehiculos.remove(vehiculo)
+            return True
+        return False
