@@ -1,6 +1,6 @@
 from vehiculos import veiculo 
 class Agregarvehiculo:
-    def __init__(self):
+    def __init__(self, listadevehiculos = []):
         self.listadevehiculos = []
     def agregar_vehiculo(self, patente, entrada, salida, slot):
         if patente:
