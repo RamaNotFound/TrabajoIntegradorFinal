@@ -1,5 +1,5 @@
 class vehiculo:
-    def __init__(self, patente = None, entrada = None, slot = None):
+    def __init__(self, patente, entrada, slot=None):
         self.patente = patente
         self.slot = slot
         self.entrada = entrada

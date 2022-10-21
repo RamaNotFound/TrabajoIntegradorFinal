@@ -6,27 +6,28 @@ class RepositorioPatentes:
         self.archivo = archivo
     def obtener_todo(self):
         patentes = []
-        with open(self.archivo, 'r') as fp:
-            for patente_como_texto in fp:
+        with open(self.archivo, 'r') as patente_auto:
+            for patente_como_texto in patente_auto:
                 n = self.patente_a_texto(patente_como_texto)
                 patentes.append(n)
         return patente
     
-    def patente_a_nota(self, patente):
-        patente = texto[:-1]
+    def patente_a_texto(self, patente):
+        texto = patente[:-1]
         patente_como_lista = patente.split(',')
-        fecha = patente_como_lista[2].split('-')
+        n = vehiculo(vehiculo_como_lista[0], vehiculo_como_lista[1])
+        fecha = vehiculo_como_lista[2].split('-')
         n.fecha_creacion = datetime.date(int(fecha[0]),int(fecha[1]),int(fecha[2])) 
         return n
     
     def guardar_todo(self, notas):
-        with open(self.archivo, 'w') as fp:
+        with open(self.archivo, 'w') as patente_auto:
             for patente in patentes:
                 patente_como_texto = self.patente_a_texto(patente)
-                fp.write(patente_como_texto)
+                patente_auto.write(patente_como_texto)
         print("Guardado en "+ self.archivo)
         
-    def patente_a_texto(self,patente):
-        fc = patente.fecha_creacion
-        fecha_en_patente = str(fc.year) + '-' + str(fc.month) + '-' + str(fc.day)
-        return nota.texto + ',' + patente.etiquetas + ',' + fecha_en_patente + "\n"
+    def texto_a_patente(self,patente):
+        entrada = vehiculo().fecha_creacion
+        fecha_en_texto = str(entrada.year) + '-' + str(entrada.month) + '-' + str(entrada.day)
+        return vehiculo.patente + ',' + fecha_en_texto + "\n"

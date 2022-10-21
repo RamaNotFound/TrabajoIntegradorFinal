@@ -67,7 +67,7 @@ class Gui():
         item = self.treeview.insert("", tkinter.END, text=nota.id,
                                         values=(nota.texto, nota.etiquetas))
 
-    def eliminar_nota(self):
+    def eliminar_vehiculo(self):
         if not self.treeview.selection():
             messagebox.showwarning("Sin selección",
                 "Seleccione primero el vehiculo a eliminar")
@@ -95,5 +95,6 @@ class Gui():
         self.repositorio.guardar_todo(self.Agregarvehiculo.patente)
         self.ventana_principal.destroy()
     
-    
-
+if __name__ == "__main__":
+    gui = Gui()
+    gui.ventana_principal.mainloop()
