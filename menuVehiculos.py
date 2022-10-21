@@ -95,8 +95,5 @@ class Gui():
         self.repositorio.guardar_todo(self.Agregarvehiculo.patente)
         self.ventana_principal.destroy()
     
-if __name__ == "__main__":
-    gui = Gui()
-    gui.ventana_principal.mainloop()
     
 

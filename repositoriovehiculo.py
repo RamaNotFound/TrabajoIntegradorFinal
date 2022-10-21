@@ -1,5 +1,6 @@
 from VehiculosAgregar import Agregarvehiculo
 from Vehiculos import vehiculo
+import datetime
 class RepositorioPatentes:
     def __init__(self, archivo = "patentes.txt"):
         self.archivo = archivo
