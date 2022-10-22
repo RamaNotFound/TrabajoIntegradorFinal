@@ -1,4 +1,4 @@
-from VehiculosAgregar import Agregarvehiculo
+from Gestion import gestion
 from repositoriovehiculo import RepositorioPatentes
 from Vehiculos import vehiculo
 import tkinter
@@ -6,10 +6,18 @@ from tkinter import ttk
 from tkinter import messagebox
 class Gui():
     def __init__(self):
-        self.ventana_principal = tkinter.Tk()
-        self.vehiculo = vehiculo()
+        self.iniciar_gestion()
+        self.iniciar_gui()
+
+    def iniciar_gestion(self):
         self.repositorio = RepositorioPatentes()
         patentes = self.repositorio.obtener_todo()
+        self.gestion = gestion(patentes)
+    def iniciar_gui(self):
+        self.ventana_principal = tkinter.Tk()
+        self.vehiculos = gestion()
+        self.repositorio = RepositorioPatentes()
+        patente = self.repositorio.obtener_todo()
         self.ventana_principal.title("vehiculo")
         botonAgregar=tkinter.Button(self.ventana_principal,text="Agregar un vehiculo", 
                            command = self.agregar_vehiculo).grid(row=0, column=0)
@@ -32,13 +40,13 @@ class Gui():
         botonSalir = tkinter.Button(self.ventana_principal, text = "Salir",
                 command = self.salir).grid(row=11,column=1)
         self.cajaBuscar.focus()
-
+    
     def poblar_tabla(self, Patente = None):
 
         for i in self.treeview.get_children():
             self.treeview.delete(i)
         if not Patente:
-            Patente = self.vehiculo.Patente
+            Patente = self.vehiculos.patentes
         for nota in Patente:
             item = self.treeview.insert("", tkinter.END, text=nota.id,
                               values=(nota.texto, nota.etiquetas), iid=nota.id)
@@ -47,9 +55,9 @@ class Gui():
         self.modalAgregar = tkinter.Toplevel(self.ventana_principal)
         self.modalAgregar.grab_set()
         tkinter.Label(self.modalAgregar, text = "Patente: ").grid()
-        self.texto = tkinter.Entry(self.modalAgregar)
-        self.texto.grid(row=0,column=1,columnspan=2)
-        self.texto.focus()
+        self.patente = tkinter.Entry(self.modalAgregar)
+        self.patente.grid(row=0,column=1,columnspan=2)
+        self.patente.focus()
         tkinter.Label(self.modalAgregar, text = "Entrada: ").grid(row=1)
         self.Entrada = tkinter.Entry(self.modalAgregar)
         self.Entrada.grid(row=1, column=1, columnspan=2)
@@ -62,10 +70,10 @@ class Gui():
         botonCancelar.grid(row=2,column=2)
 
     def agregar_ok(self, event=None):
-        vehiculo = self.Agregarvehiculo.agregar_vehiculo(self.texto.get(), self.etiquetas.get())
+        nuevo_vehiculo = self.gestion.agregar_vehiculo(self.patente.get(), self.Entrada.get(),"2022-10-06","10")
         self.modalAgregar.destroy()
-        item = self.treeview.insert("", tkinter.END, text=nota.id,
-                                        values=(nota.texto, nota.etiquetas))
+        item = self.treeview.insert("", tkinter.END, text=nuevo_vehiculo.patente,
+                                        values=(nuevo_vehiculo.slot, nuevo_vehiculo.entrada))
 
     def eliminar_vehiculo(self):
         if not self.treeview.selection():
@@ -77,7 +85,7 @@ class Gui():
                 "¿Está seguro de eliminar el vehiculo?")
             if resp:
                 id_nota = int(self.treeview.selection()[0][1:])
-                if self.Agregarvehiculo.eliminar_vehiculo(id_nota):
+                if self.gestion.eliminar_vehiculo(id_nota):
                     self.treeview.delete(self.treeview.selection()[0])
                     return True
             return False
@@ -92,7 +100,7 @@ class Gui():
                                 "Ninguna nota coincide con la búsqueda")
             
     def salir():
-        self.repositorio.guardar_todo(self.Agregarvehiculo.patente)
+        self.repositorio.guardar_todo(self.gestion.patente)
         self.ventana_principal.destroy()
     
 if __name__ == "__main__":

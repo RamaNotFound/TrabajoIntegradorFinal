@@ -1,4 +1,4 @@
-from VehiculosAgregar import Agregarvehiculo
+from Gestion import gestion
 from Vehiculos import vehiculo
 import datetime
 class RepositorioPatentes:
@@ -10,14 +10,16 @@ class RepositorioPatentes:
             for patente_como_texto in patente_auto:
                 n = self.patente_a_texto(patente_como_texto)
                 patentes.append(n)
-        return patente
+        return patentes
     
     def patente_a_texto(self, patente):
         texto = patente[:-1]
-        patente_como_lista = patente.split(',')
-        n = vehiculo(vehiculo_como_lista[0], vehiculo_como_lista[1])
-        fecha = vehiculo_como_lista[2].split('-')
-        n.fecha_creacion = datetime.date(int(fecha[0]),int(fecha[1]),int(fecha[2])) 
+        Vehiculo_como_lista = texto.split(',')
+        n = vehiculo(Vehiculo_como_lista[0], Vehiculo_como_lista[1],Vehiculo_como_lista[2], Vehiculo_como_lista[3])
+        fecha_entrada = Vehiculo_como_lista[2].split('-')
+        n.entrada = datetime.date(int(fecha_entrada[0]),int(fecha_entrada[1]),int(fecha_entrada[2])) 
+        fecha_salida = Vehiculo_como_lista[2].split('-')
+        n.salida = datetime.date(int(fecha_salida[0]),int(fecha_salida[1]),int(fecha_salida[2])) 
         return n
     
     def guardar_todo(self, notas):
