@@ -43,12 +43,11 @@ class Gui():
         self.cajaBuscar.focus()
 
     def poblar_tabla(self, Patente = None):
-
         for i in self.treeview.get_children():
             self.treeview.delete(i)
         if not Patente:
             Patente = self.vehiculos.patentes
-        for nota in Patente:
+        for patente in Patente:
             item = self.treeview.insert("", tkinter.END, text=nota.id,
                               values=(nota.texto, nota.etiquetas), iid=nota.id)
         
@@ -94,8 +93,8 @@ class Gui():
     def buscar_Patente(self):
         filtro = self.cajaBuscar.get()
         patente = gestion.buscar_por_id(self,patente_para_buscar)
-        if patentes:
-            self.poblar_tabla(patentes)
+        if patente:
+            self.poblar_tabla(patente)
         else:
             messagebox.showwarning("Sin resultados",
                                 "Ninguna nota coincide con la búsqueda")

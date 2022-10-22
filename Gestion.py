@@ -6,8 +6,8 @@ class gestion:
         nuevo_vehiculo = vehiculo(patente, entrada, salida, slot)
         self.patentes.append(nuevo_vehiculo)
         return nuevo_vehiculo
-    def buscar_por_id(self, patente_para_buscar,patente):
-        for patente_para_buscar in self.patentes:
+    def buscar_por_id(self, patente):
+        for patente in self.patentes:
             if patente_para_buscar == patente:
                 return patente
         return None

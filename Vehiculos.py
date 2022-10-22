@@ -7,4 +7,4 @@ class vehiculo:
       
     
     def existeVeiculo(self, busqueda):
-        return ((busqueda in self.patente) or (busqueda in self.slot))
+        return (busqueda in self.patente)
