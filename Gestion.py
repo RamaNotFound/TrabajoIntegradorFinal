@@ -1,4 +1,4 @@
-from Vehiculos import vehiculo 
+from Vehiculos import vehiculo
 class gestion:
     def __init__(self, listadevehiculos = []):
         self.patentes = listadevehiculos
@@ -6,14 +6,14 @@ class gestion:
         nuevo_vehiculo = vehiculo(patente, entrada, salida, slot)
         self.patentes.append(nuevo_vehiculo)
         return nuevo_vehiculo
-    def buscar_por_id(self, id_para_buscar):
-        for nuevo_vehiculo in self.patentes:
-            if nuevo_vehiculo.patente == un_vehiculo:
-                return un_vehiculo
+    def buscar_por_id(self, patente_para_buscar,patente):
+        for patente_para_buscar in self.patentes:
+            if patente_para_buscar == patente:
+                return patente
         return None
     def eliminar_vehiculo(self, patente):
-        vehiculo = self.buscar_por_id(patente)
-        if vehiculo.patente == patente:
+        vehiculo_existe = self.buscar_por_id(patente)
+        if vehiculo_existe.patente == patente:
             self.patentes.remove(vehiculo)
             return True
         return False

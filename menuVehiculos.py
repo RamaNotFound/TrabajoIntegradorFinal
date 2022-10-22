@@ -13,6 +13,7 @@ class Gui():
         self.repositorio = RepositorioPatentes()
         patentes = self.repositorio.obtener_todo()
         self.gestion = gestion(patentes)
+
     def iniciar_gui(self):
         self.ventana_principal = tkinter.Tk()
         self.vehiculos = gestion()
@@ -30,17 +31,17 @@ class Gui():
                            command = self.buscar_Patente).grid(row=1, column=2)
         self.treeview = ttk.Treeview(self.ventana_principal)
         self.treeview = ttk.Treeview(self.ventana_principal, 
-                                     columns=("Patentes", "Entradas"))
-        self.treeview.heading("#0", text="id")
+                                     columns=("slot", "Entradas"))
+        self.treeview.heading("#0", text="Patentes")
         self.treeview.column("#0", minwidth=0, width="40")
-        self.treeview.heading("Patentes", text="Patentes")
+        self.treeview.heading("slot", text="slot")
         self.treeview.heading("Entradas", text="Entradas")
         self.treeview.grid(row=10, columnspan=3)
         self.poblar_tabla()
         botonSalir = tkinter.Button(self.ventana_principal, text = "Salir",
                 command = self.salir).grid(row=11,column=1)
         self.cajaBuscar.focus()
-    
+
     def poblar_tabla(self, Patente = None):
 
         for i in self.treeview.get_children():
@@ -84,15 +85,15 @@ class Gui():
             resp = messagebox.askokcancel("Confirmar",
                 "¿Está seguro de eliminar el vehiculo?")
             if resp:
-                id_nota = int(self.treeview.selection()[0][1:])
-                if self.gestion.eliminar_vehiculo(id_nota):
+                patente = int(self.treeview.selection()[0][1:])
+                if self.gestion.eliminar_vehiculo(patente):
                     self.treeview.delete(self.treeview.selection()[0])
                     return True
             return False
 
     def buscar_Patente(self):
         filtro = self.cajaBuscar.get()
-        Patente = self.Agregarvehiculo.buscar(filtro)
+        patente = gestion.buscar_por_id(self,patente_para_buscar)
         if patentes:
             self.poblar_tabla(patentes)
         else:
