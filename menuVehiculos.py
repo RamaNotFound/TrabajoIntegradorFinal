@@ -108,9 +108,9 @@ class Gui():
 
     def buscar_Patente(self):
         filtro = self.cajaBuscar.get()
-        patente = gestion.buscar_por_id(busqueda)
+        patente = self.gestion.buscar_vehiculo(filtro)
         if patente:
-            self.poblar_tabla(patente)
+            self.poblar_tabla([patente])
         else:
             messagebox.showwarning("Sin resultados",
                                 "Ninguna nota coincide con la búsqueda")
