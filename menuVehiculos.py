@@ -4,6 +4,8 @@ from Vehiculos import vehiculo
 import tkinter
 from tkinter import ttk
 from tkinter import messagebox
+import datetime
+from datetime import date
 class Gui():
     def __init__(self):
         self.iniciar_gestion()
@@ -31,25 +33,26 @@ class Gui():
                            command = self.buscar_Patente).grid(row=1, column=2)
         self.treeview = ttk.Treeview(self.ventana_principal)
         self.treeview = ttk.Treeview(self.ventana_principal, 
-                                     columns=("slot", "Entradas"))
+                                     columns=("Entradas","Salidas","slot"))
         self.treeview.heading("#0", text="Patentes")
-        self.treeview.column("#0", minwidth=0, width="40")
-        self.treeview.heading("slot", text="slot")
+        self.treeview.column("#0", minwidth=0, width="60")
         self.treeview.heading("Entradas", text="Entradas")
+        self.treeview.heading("Salidas", text="Salidas")
+        self.treeview.heading("slot", text="slot")
         self.treeview.grid(row=10, columnspan=3)
         self.poblar_tabla()
         botonSalir = tkinter.Button(self.ventana_principal, text = "Salir",
                 command = self.salir).grid(row=11,column=1)
         self.cajaBuscar.focus()
 
-    def poblar_tabla(self, Patente = None):
+    def poblar_tabla(self, vehiculos = None):
         for i in self.treeview.get_children():
             self.treeview.delete(i)
-        if not Patente:
-            Patente = self.vehiculos.patentes
-        for patente in Patente:
-            item = self.treeview.insert("", tkinter.END, text=nota.id,
-                              values=(nota.texto, nota.etiquetas), iid=nota.id)
+        if not vehiculos:
+            vehiculos = self.gestion.patentes
+        for vehiculo in vehiculos:
+            item = self.treeview.insert("", tkinter.END, text=vehiculo.patente,
+                              values=(vehiculo.entrada, vehiculo.salida, vehiculo.slot), iid=vehiculo.patente)
         
     def agregar_vehiculo(self):
         self.modalAgregar = tkinter.Toplevel(self.ventana_principal)
@@ -58,22 +61,31 @@ class Gui():
         self.patente = tkinter.Entry(self.modalAgregar)
         self.patente.grid(row=0,column=1,columnspan=2)
         self.patente.focus()
-        tkinter.Label(self.modalAgregar, text = "Entrada: ").grid(row=1)
-        self.Entrada = tkinter.Entry(self.modalAgregar)
-        self.Entrada.grid(row=1, column=1, columnspan=2)
+        tkinter.Label(self.modalAgregar, text = "Salida: ").grid(row=1)
+        self.Salida = tkinter.Entry(self.modalAgregar)
+        self.Salida.grid(row=1, column=1, columnspan=2)
+        tkinter.Label(self.modalAgregar, text = "Slot: ").grid(row=2)
+        self.slot = tkinter.Entry(self.modalAgregar)
+        self.slot.grid(row=2, column=1, columnspan=2)
         botonOK = tkinter.Button(self.modalAgregar, text="Guardar",
                 command=self.agregar_ok)
         self.modalAgregar.bind("<Return>", self.agregar_ok)
-        botonOK.grid(row=2)
+        botonOK.grid(row=3)
         botonCancelar = tkinter.Button(self.modalAgregar, text = "Cancelar",
                 command = self.modalAgregar.destroy)
-        botonCancelar.grid(row=2,column=2)
+        botonCancelar.grid(row=3,column=2)
 
     def agregar_ok(self, event=None):
-        nuevo_vehiculo = self.gestion.agregar_vehiculo(self.patente.get(), self.Entrada.get(),"2022-10-06","10")
+        salida = self.Salida.get()
+        if salida == '':
+            salida = date.today()
+        else:
+            salida_temp = salida.split("-")
+            salida = datetime.date(int(salida_temp[0]),int(salida_temp[1]),int(salida_temp[2]))
+        nuevo_vehiculo = self.gestion.agregar_vehiculo(self.patente.get(), date.today(),salida ,self.slot.get())
         self.modalAgregar.destroy()
         item = self.treeview.insert("", tkinter.END, text=nuevo_vehiculo.patente,
-                                        values=(nuevo_vehiculo.slot, nuevo_vehiculo.entrada))
+                                        values=(nuevo_vehiculo.entrada, nuevo_vehiculo.salida, nuevo_vehiculo.slot))
 
     def eliminar_vehiculo(self):
         if not self.treeview.selection():
@@ -84,23 +96,27 @@ class Gui():
             resp = messagebox.askokcancel("Confirmar",
                 "¿Está seguro de eliminar el vehiculo?")
             if resp:
-                patente = int(self.treeview.selection()[0][1:])
+                patente = str(self.treeview.selection()[0])
+                print(patente)
                 if self.gestion.eliminar_vehiculo(patente):
-                    self.treeview.delete(self.treeview.selection()[0])
+                    self.treeview.delete(patente)
                     return True
+                else:
+                    messagebox.showwarning("Error al eliminar",
+                "No se pudo eliminar el vehiculo")
             return False
 
     def buscar_Patente(self):
         filtro = self.cajaBuscar.get()
-        patente = gestion.buscar_por_id(self,patente_para_buscar)
+        patente = gestion.buscar_por_id(busqueda)
         if patente:
             self.poblar_tabla(patente)
         else:
             messagebox.showwarning("Sin resultados",
                                 "Ninguna nota coincide con la búsqueda")
             
-    def salir():
-        self.repositorio.guardar_todo(self.gestion.patente)
+    def salir(self):
+        self.repositorio.guardar_todo(self.gestion.patentes)
         self.ventana_principal.destroy()
     
 if __name__ == "__main__":
